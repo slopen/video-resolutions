@@ -8,7 +8,7 @@
   padding: 20px;
 }
 #layout .controls {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 #layout .video-content {
   display: inline-block;
@@ -24,5 +24,7 @@
 }
 select {
   width: 100px;
-  margin: 0 10px;
+}
+label {
+  margin-right: 20px;
 }

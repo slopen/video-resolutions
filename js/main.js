@@ -57,7 +57,7 @@ function populateSelects(){
 function displayVideoSizes(){
     var $video = $('#video');
     if ($video.attr('src')){
-        $('#display-resolutions').text($video.outerWidth() + ':' + $video.outerHeight());
+        $('#display-resolutions').text('['+$video.outerWidth() + ':' + $video.outerHeight()+']');
     }
 }
 
@@ -88,8 +88,13 @@ function setUserMedia (event){
         var $video = $('#video');
         window.localStream = stream;
 
-        $video [0].width = values [0];
-        $video [0].height = values [1];
+        if (!$('#dont-set')[0].checked){
+            $video [0].width = values [0];
+            $video [0].height = values [1];
+        } else {
+            $video.removeAttr('width');
+            $video.removeAttr('height');
+        }
 
         $video.attr('src', window.URL.createObjectURL(stream));
         $video.on('canplay', displayVideoSizes);
