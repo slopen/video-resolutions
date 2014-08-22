@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <title>video resolutions</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/style.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.2.1/lodash.compat.min.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+
+    <body>
+        <div id="layout">
+            <div class="controls">
+                <label>WxH: <select id="resolutions-both"></select></label>
+                <label>W:<select id="resolutions-width"></select></label>
+                <span id="display-resolutions"></span>
+            </div>
+
+            <div class="video-content">
+                <div class="video">
+                    <video id="video" muted autoplay/>
+                </div>
+            </div>
+
+
+        </div>
+    </body>
+</html>

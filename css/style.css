@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+#layout {
+  font-family: Arial;
+  font-size: 16px;
+  padding: 20px;
+}
+#layout .controls {
+  margin-bottom: 30px;
+}
+#layout .video-content {
+  display: inline-block;
+}
+#layout .video {
+  position: relative;
+}
+#layout .video video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #EEE;
+}
+select {
+  width: 100px;
+  margin: 0 10px;
+}
