@@ -77,6 +77,7 @@ function adjustSizes(){
     if (adjustment === 0) return;
 
     if (adjustment > 0) {
+        adjustment = Math.floor(adjustment);
         $this.css({
             width: 100 + adjustment + '%',
             height: '100%',
@@ -85,13 +86,14 @@ function adjustSizes(){
         });
         console.log('adjust width:', adjustment, '%');
     } else {
+        adjustment = Math.ceil(-adjustment);
         $this.css({
             width: '100%',
-            height: 100 - adjustment + '%',
-            top: adjustment/2 + '%',
+            height: 100 + adjustment + '%',
+            top: (-adjustment)/2 + '%',
             left: 0
         });
-        console.log('adjust height:', -adjustment, '%');
+        console.log('adjust height:', adjustment, '%');
     }
 
 }
@@ -114,9 +116,6 @@ function setUserMedia (event){
     if ($target.attr('id').match(/width$/)){
         delete settings.mandatory.maxHeight;
     }
-
-    $('select').removeClass('selected');
-    $target.addClass('selected');
 
     console.log('settings:', settings.mandatory);
 

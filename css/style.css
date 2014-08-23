@@ -38,15 +38,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: #EEE;
-}
-select {
-  opacity: .7;
-}
-select.selected {
-  opacity: 1;
-  outline-offset: -2px;
-  outline: -webkit-focus-ring-color auto 5px;
+  background: #DDD;
 }
 label {
   margin-right: 20px;
