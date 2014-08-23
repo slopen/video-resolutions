@@ -45,18 +45,23 @@ $(function(){
     $('#responsive').on('change', function(){
         $('.video-content') [this.checked ? 'addClass' : 'removeClass'] ('responsive');
     });
+    $('#crop').on('change', function(){
+        $('.video-content') [this.checked ? 'addClass' : 'removeClass'] ('crop');
+    });
     $('#dont-set').on('change', function(){
         var $selected = $('select.selected');
         if ($selected.length) $selected.trigger('change');
     });
 
     $(window).on('resize', displayVideoSizes);
+    $('#video').on('canplaythrough', adjustSizes);
 });
 
 function populateSelects(){
     var options = document.createDocumentFragment();
     _.each(resolutions, function(item){
-        options.appendChild($('<option value=' + item + '>' + item + '</option>') [0]);
+        var values = item.split(':'), ratio = (values [0] / values [1]).toFixed(3);
+        options.appendChild($('<option value=' + item + '>' + item + ' ['+ ratio + ']</option>') [0]);
     });
     $('select').append(options);
 }
@@ -65,6 +70,31 @@ function displayVideoSizes(){
     var $video = $('#video');
     if ($video.attr('src')){
         $('#display-resolutions').text('['+$video.outerWidth() + ':' + $video.outerHeight()+']');
+    }
+}
+
+function adjustSizes(){
+    var $this = $(this);
+
+    console.log('videoWidth:videoHeight', this.videoWidth + ':' + this.videoHeight);
+
+    this.width = this.videoWidth;
+    this.height = this.videoHeight;
+
+    var ratio = 4/3,
+        adjustment = 100 / (ratio / (this.width/this.height - ratio));
+        console.log('adjustment', adjustment);
+
+    if (adjustment >= 0) {
+        $this.css({
+            width: 100 + adjustment + '%',
+            height: '100%'
+        });
+    } else {
+        $this.css({
+            width: '100%',
+            height: 100 - adjustment + '%'
+        });
     }
 }
 
@@ -98,16 +128,7 @@ function setUserMedia (event){
         var $video = $('#video');
         window.localStream = stream;
 
-        if (!$('#dont-set')[0].checked){
-            $video [0].width = values [0];
-            $video [0].height = values [1];
-        } else {
-            $video.removeAttr('width');
-            $video.removeAttr('height');
-        }
-
         $video.attr('src', window.URL.createObjectURL(stream));
-        $video.on('canplay', displayVideoSizes);
 
     }, function(){
         console.error('Compatibility chesk failed: UserMedia Error', arguments);

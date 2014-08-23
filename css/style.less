@@ -10,13 +10,27 @@
     }
 
     .video-content{
-        display:inline-block;
-
-        &.responsive{
+         &.responsive{
             width:100%;
             .video{
                 width:100%;
                 video{
+                    width:100%;
+                }
+            }
+        }
+
+        &.crop{
+            .video{
+                height:0;
+                width:100%;
+                padding-bottom:75%;
+                overflow:hidden;
+                background: #BBB;
+
+                video{
+                    position:absolute;
+                    height:100%;
                     width:100%;
                 }
             }
@@ -36,7 +50,6 @@
 }
 
 select{
-    width:100px;
     opacity:.7;
     &.selected{
         opacity:1;

@@ -10,9 +10,6 @@
 #layout .controls {
   margin-bottom: 10px;
 }
-#layout .video-content {
-  display: inline-block;
-}
 #layout .video-content.responsive {
   width: 100%;
 }
@@ -20,6 +17,18 @@
   width: 100%;
 }
 #layout .video-content.responsive .video video {
+  width: 100%;
+}
+#layout .video-content.crop .video {
+  height: 0;
+  width: 100%;
+  padding-bottom: 75%;
+  overflow: hidden;
+  background: #BBB;
+}
+#layout .video-content.crop .video video {
+  position: absolute;
+  height: 100%;
   width: 100%;
 }
 #layout .video {
@@ -32,7 +41,6 @@
   background: #EEE;
 }
 select {
-  width: 100px;
   opacity: .7;
 }
 select.selected {
