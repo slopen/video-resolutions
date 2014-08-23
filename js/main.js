@@ -42,17 +42,6 @@ $(function(){
     $('#resolutions-both').on('change', setUserMedia);
     $('#resolutions-width').on('change', setUserMedia);
 
-    $('#responsive').on('change', function(){
-        $('.video-content') [this.checked ? 'addClass' : 'removeClass'] ('responsive');
-    });
-    $('#crop').on('change', function(){
-        $('.video-content') [this.checked ? 'addClass' : 'removeClass'] ('crop');
-    });
-    $('#dont-set').on('change', function(){
-        var $selected = $('select.selected');
-        if ($selected.length) $selected.trigger('change');
-    });
-
     $(window).on('resize', displayVideoSizes);
     $('#video').on('canplaythrough', adjustSizes);
 });
@@ -78,24 +67,33 @@ function adjustSizes(){
 
     console.log('videoWidth:videoHeight', this.videoWidth + ':' + this.videoHeight);
 
+    displayVideoSizes();
+
     this.width = this.videoWidth;
     this.height = this.videoHeight;
 
-    var ratio = 4/3,
-        adjustment = 100 / (ratio / (this.width/this.height - ratio));
-        console.log('adjustment', adjustment);
+    var ratio = 4/3, adjustment = 100 / (ratio / (this.width/this.height - ratio));
 
-    if (adjustment >= 0) {
+    if (adjustment === 0) return;
+
+    if (adjustment > 0) {
         $this.css({
             width: 100 + adjustment + '%',
-            height: '100%'
+            height: '100%',
+            top: 0,
+            left: (-adjustment)/2 + '%',
         });
+        console.log('adjust width:', adjustment, '%');
     } else {
         $this.css({
             width: '100%',
-            height: 100 - adjustment + '%'
+            height: 100 - adjustment + '%',
+            top: adjustment/2 + '%',
+            left: 0
         });
+        console.log('adjust height:', -adjustment, '%');
     }
+
 }
 
 function setUserMedia (event){
