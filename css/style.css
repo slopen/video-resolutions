@@ -13,6 +13,15 @@
 #layout .video-content {
   display: inline-block;
 }
+#layout .video-content.responsive {
+  width: 100%;
+}
+#layout .video-content.responsive .video {
+  width: 100%;
+}
+#layout .video-content.responsive .video video {
+  width: 100%;
+}
 #layout .video {
   position: relative;
 }
@@ -24,6 +33,12 @@
 }
 select {
   width: 100px;
+  opacity: .7;
+}
+select.selected {
+  opacity: 1;
+  outline-offset: -2px;
+  outline: -webkit-focus-ring-color auto 5px;
 }
 label {
   margin-right: 20px;

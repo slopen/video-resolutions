@@ -42,6 +42,13 @@ $(function(){
     $('#resolutions-both').on('change', setUserMedia);
     $('#resolutions-width').on('change', setUserMedia);
 
+    $('#responsive').on('change', function(){
+        $('.video-content') [this.checked ? 'addClass' : 'removeClass'] ('responsive');
+    });
+    $('#dont-set').on('change', function(){
+        var $selected = $('select.selected');
+        if ($selected.length) $selected.trigger('change');
+    });
 
     $(window).on('resize', displayVideoSizes);
 });
@@ -79,6 +86,9 @@ function setUserMedia (event){
     if ($target.attr('id').match(/width$/)){
         delete settings.mandatory.maxHeight;
     }
+
+    $('select').removeClass('selected');
+    $target.addClass('selected');
 
     console.log('settings:', settings.mandatory);
 

@@ -11,6 +11,16 @@
 
     .video-content{
         display:inline-block;
+
+        &.responsive{
+            width:100%;
+            .video{
+                width:100%;
+                video{
+                    width:100%;
+                }
+            }
+        }
     }
 
     .video{
@@ -27,6 +37,12 @@
 
 select{
     width:100px;
+    opacity:.7;
+    &.selected{
+        opacity:1;
+        outline-offset: -2px;
+        outline: -webkit-focus-ring-color auto 5px;
+    }
 }
 label{
     margin-right:20px;
