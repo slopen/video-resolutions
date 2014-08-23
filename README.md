@@ -1,6 +1,6 @@
 video-resolutions
 =================
 
-cropping userMedia to fit 4:3
+Responsive cropping userMedia to fit 4:3 (Chrome)
 
 [view demo](https://rawgithub.com/slopen/video-resolutions/master/index.html)

@@ -10,23 +10,14 @@
 #layout .controls {
   margin-bottom: 10px;
 }
-#layout .video-content.responsive {
-  width: 100%;
-}
-#layout .video-content.responsive .video {
-  width: 100%;
-}
-#layout .video-content.responsive .video video {
-  width: 100%;
-}
-#layout .video-content.crop .video {
+#layout .video-content .video {
   height: 0;
   width: 100%;
-  padding-bottom: 75%;
   overflow: hidden;
   background: #BBB;
+  padding-bottom: 75%;
 }
-#layout .video-content.crop .video video {
+#layout .video-content .video video {
   position: absolute;
   height: 100%;
   width: 100%;

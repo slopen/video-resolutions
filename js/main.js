@@ -1,3 +1,4 @@
+// just copy/pasted from https://www.webrtc-experiment.com/webrtcpedia/
 var resolutions = _.chain([
     '1920:1080',
     '1280:720',
@@ -31,43 +32,46 @@ var resolutions = _.chain([
     return 1 / (Number(res [0]) + Number(res [1]));
 }).value();
 
+
+// compatibility shim
 navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.getUserMedia;
 window.URL = window.webkitURL ||  window.URL;
 
 
-$(function(){
+// main start
 
+$(function(){
     populateSelects();
 
-    $('#resolutions-both').on('change', setUserMedia);
-    $('#resolutions-width').on('change', setUserMedia);
-
+    $('#resolutions').on('change', setUserMedia);
     $(window).on('resize', displayVideoSizes);
     $('#video').on('canplaythrough', adjustSizes);
 });
 
-function populateSelects(){
+
+function populateSelects (){
     var options = document.createDocumentFragment();
-    _.each(resolutions, function(item){
-        var values = item.split(':'), ratio = (values [0] / values [1]).toFixed(3);
-        options.appendChild($('<option value=' + item + '>' + item + ' ['+ ratio + ']</option>') [0]);
+    _(resolutions).each(function(item){
+        var values = item.split(':'),
+            ratio = (values [0] / values [1]).toFixed(3);
+        options.appendChild($('<option value="' + item + '">' + item + ' ['+ ratio + ']</option>') [0]);
     });
     $('select').append(options);
 }
 
-function displayVideoSizes(){
+function displayVideoSizes (){
     var $video = $('#video');
     if ($video.attr('src')){
-        $('#display-resolutions').text('['+$video.outerWidth() + ':' + $video.outerHeight()+']');
+        $('#actual-resolutions').text('['+$video.outerWidth() + ':' + $video.outerHeight()+']');
     }
 }
 
-function adjustSizes(){
+function adjustSizes (){
     var $this = $(this);
 
-    console.log('videoWidth:videoHeight', this.videoWidth + ':' + this.videoHeight);
+    console.log ('videoWidth:videoHeight', this.videoWidth + ':' + this.videoHeight);
 
-    displayVideoSizes();
+    displayVideoSizes ();
 
     this.width = this.videoWidth;
     this.height = this.videoHeight;
@@ -82,7 +86,7 @@ function adjustSizes(){
             width: 100 + adjustment + '%',
             height: '100%',
             top: 0,
-            left: (-adjustment)/2 + '%',
+            left: -adjustment/2 + '%',
         });
         console.log('adjust width:', adjustment, '%');
     } else {
@@ -90,7 +94,7 @@ function adjustSizes(){
         $this.css({
             width: '100%',
             height: 100 + adjustment + '%',
-            top: (-adjustment)/2 + '%',
+            top: -adjustment/2 + '%',
             left: 0
         });
         console.log('adjust height:', adjustment, '%');
@@ -98,9 +102,9 @@ function adjustSizes(){
 
 }
 
-function setUserMedia (event){
-    var $target = $(event.target),
-        values = $target.val().split(':'),
+function setUserMedia (){
+    var $video = $('#video'),
+        values = $(this).val().split(':'),
         settings = {
             mandatory: {
                 maxWidth: Number(values [0]),
@@ -108,25 +112,18 @@ function setUserMedia (event){
             }
         };
 
+    console.log('settings:', settings.mandatory);
+
     if (window.localStream){
         window.localStream.stop();
-        $('#video').attr('scr', '');
+        $video.attr('scr', '');
     }
-
-    if ($target.attr('id').match(/width$/)){
-        delete settings.mandatory.maxHeight;
-    }
-
-    console.log('settings:', settings.mandatory);
 
     navigator.getUserMedia({
         video: settings
     }, function(stream){
-        var $video = $('#video');
         window.localStream = stream;
-
         $video.attr('src', window.URL.createObjectURL(stream));
-
     }, function(){
         console.error('Compatibility chesk failed: UserMedia Error', arguments);
     });
